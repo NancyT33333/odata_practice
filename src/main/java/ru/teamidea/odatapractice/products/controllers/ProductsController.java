@@ -20,10 +20,10 @@ import ru.teamidea.odatapractice.products.models.Product;
  * slash in the URL
  */
 @RestController
-@RequestMapping(path = ProductstController.PATH)
+@RequestMapping(path = ProductsController.PATH)
 @RequestScope // @Scope(WebApplicationContext.SCOPE_REQUEST)
 @Validated
-public class ProductstController {
+public class ProductsController {
     public static final String PATH = "/odata";
     private static int ID = 0;
 
