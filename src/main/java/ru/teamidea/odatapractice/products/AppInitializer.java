@@ -1,4 +1,4 @@
-package com.sap.bulletinboard.ads;
+package ru.teamidea.odatapractice.products;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -10,7 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.sap.bulletinboard.ads.config.WebAppContextConfig;
+import ru.teamidea.odatapractice.products.config.WebAppContextConfig;
 
 public class AppInitializer implements WebApplicationInitializer {
 
@@ -39,7 +39,7 @@ public class AppInitializer implements WebApplicationInitializer {
     private AnnotationConfigWebApplicationContext getApplicationContext() {
         AnnotationConfigWebApplicationContext applicationContext = new AnnotationConfigWebApplicationContext();
         applicationContext.register(WebAppContextConfig.class);
-        applicationContext.getEnvironment().setActiveProfiles("cloud");
+//        applicationContext.getEnvironment().setActiveProfiles("cloud");
         return applicationContext;
     }
 }

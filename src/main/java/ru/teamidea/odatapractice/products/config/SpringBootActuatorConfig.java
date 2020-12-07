@@ -1,4 +1,4 @@
-package com.sap.bulletinboard.ads.config;
+package ru.teamidea.odatapractice.products.config;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;

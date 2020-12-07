@@ -1,4 +1,4 @@
-package com.sap.bulletinboard.ads.controllers;
+package ru.teamidea.odatapractice.products.controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;

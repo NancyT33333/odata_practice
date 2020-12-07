@@ -1,4 +1,4 @@
-package com.sap.bulletinboard.ads.config;
+package ru.teamidea.odatapractice.products.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.sap.bulletinboard.ads") // includes sub packages
+@ComponentScan(basePackages = "ru.teamidea.odatapractice.products") // includes sub packages
 public class WebAppContextConfig {
 
     @Bean
