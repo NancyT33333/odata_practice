@@ -35,6 +35,10 @@ public class Product {
         this.id = id;
     }
     
+    public Product() {
+        
+    }
+    
 
     public BigDecimal getId() {
         return id;

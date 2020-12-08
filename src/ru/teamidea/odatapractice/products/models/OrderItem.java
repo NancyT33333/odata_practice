@@ -7,6 +7,7 @@ import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -20,14 +21,21 @@ import org.hibernate.validator.constraints.NotBlank;
 @Entity
 @Table(name = "ORDERITEMS")
 public class OrderItem {
-
+	
+	
+	
     public OrderItem(BigDecimal id) {
         this.id = id;
+    }
+    
+    public OrderItem() {
+       
     }
   
     @Column(precision = 13, scale = 3)
     private BigDecimal quantity;
     
+    @Id
     @NotBlank
     @Column(name = "ID")
     private BigDecimal id;
