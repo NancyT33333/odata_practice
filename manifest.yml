@@ -2,7 +2,7 @@
 applications:
 - name: odatapractice
   memory: 800M
-  path: target/odata-practice.war
+  path: target/ODataSpring-0.1.war
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
   # buildpack: sap_java_buildpack
   # health-check-type: http

@@ -16,13 +16,9 @@ import javax.persistence.Table;
 import org.hibernate.validator.constraints.NotBlank;
 
 
-
-
 @Entity
 @Table(name = "ORDERITEMS")
 public class OrderItem {
-	
-	
 	
     public OrderItem(BigDecimal id) {
         this.id = id;
@@ -43,7 +39,7 @@ public class OrderItem {
     @Column(name = "PRODUCTID")
     private BigDecimal productId;
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(optional=false)
     @JoinColumn(name = "ORDERID", referencedColumnName = "ID", insertable = false, updatable = false)
     private Order order;
     

@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,7 +19,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
-@Table(name = "ORDER")
+@Table(name = "ORDER1")
+
 public class Order {
     
     @Id
@@ -29,18 +32,19 @@ public class Order {
         return this.id;
     }
     
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public void setId(BigDecimal param) {
+        this.id = param;
+    }
+    
+    
+    @OneToMany(mappedBy = "order",  targetEntity = OrderItem.class)
     private List<OrderItem> orderItems;
 
     public Order() {
         this.orderItems = new ArrayList<OrderItem>();
     }
-
-    public void setId(BigDecimal param) {
-        this.id = param;
-    }
     
-    @Column(name = "surName")
+    @Column(name = "SURNAME")
     private String surName;
     
     public String getSurName() {
@@ -52,7 +56,7 @@ public class Order {
     }
    
     
-    @Column(name = "firstName")
+    @Column(name = "FIRSTNAME")
     private String firstName;
     
     public String getFirstName() {
@@ -63,7 +67,7 @@ public class Order {
         this.firstName = firstName;
     }
     
-    @Column(name = "address")
+    @Column(name = "ADDRESS")
     private String address;
     
     public String getAddress() {
@@ -74,7 +78,7 @@ public class Order {
         this.address = address;
     }
     
-    @Column(name = "phone")
+    @Column(name = "PHONE")
     private String phone;
     
     public String getPhone() {
@@ -85,7 +89,7 @@ public class Order {
         this.phone = phone;
     }
     
-    @Column(name = "email")
+    @Column(name = "EMAIL")
     private String email;
     
     public String getEmail() {
