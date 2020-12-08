@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,22 +17,23 @@ public class Product {
     @Id
     @Column(name = "PRODUCT_ID", length = 10)
     @NotBlank
-    private BigDecimal id;
+    @GeneratedValue
+    private Long id;
 
     @Column(name = "NAME")
     private String name;
     
     @Column(name = "PICTURE")
-    private String picture;
+    private Byte[] picture;
     
     @Column(name = "CURRENCY", length = 3)
     private String currency;
 
     
     @Column(name="PRICE", precision = 23, scale = 3)
-    private BigDecimal price;
+    private Float price;
 
-    public Product(BigDecimal id) {
+    public Product(Long id) {
         this.id = id;
     }
     
@@ -40,11 +42,11 @@ public class Product {
     }
     
 
-    public BigDecimal getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public String getName() {
@@ -55,11 +57,11 @@ public class Product {
         this.name = name;
     }
     
-    public BigDecimal getPrice() {
+    public Float getPrice() {
         return this.price;
     }
 
-    public void setPrice(BigDecimal param) {
+    public void setPrice(Float param) {
         this.price = param;
     }
     
@@ -71,11 +73,11 @@ public class Product {
         return this.currency;
     }
     
-    public String getPicture() {
+    public Byte[] getPicture() {
         return this.picture;
     }
 
-    public void setPicture(String param) {
+    public void setPicture(Byte[] param) {
         this.picture = param;
     }
 

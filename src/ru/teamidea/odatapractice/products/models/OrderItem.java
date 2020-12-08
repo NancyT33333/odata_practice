@@ -7,6 +7,7 @@ import javax.persistence.Column;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,24 +21,33 @@ import org.hibernate.validator.constraints.NotBlank;
 @Table(name = "ORDERITEMS")
 public class OrderItem {
 	
-    public OrderItem(BigDecimal id) {
+    public OrderItem(Long id) {
         this.id = id;
     }
     
     public OrderItem() {
        
     }
+    
+    public Long getId() {
+        return this.id;
+    }
+    
+    public void setId(Long param) {
+        this.id = param;
+    }
   
-    @Column(precision = 13, scale = 3)
-    private BigDecimal quantity;
+    @Column(name = "QUANTITY")
+    private Long quantity;
     
     @Id
+    @GeneratedValue
     @NotBlank
     @Column(name = "ID")
-    private BigDecimal id;
+    private Long id;
     
     @Column(name = "PRODUCTID")
-    private BigDecimal productId;
+    private Long productId;
     
     @ManyToOne(optional=false)
     @JoinColumn(name = "ORDERID", referencedColumnName = "ID", insertable = false, updatable = false)
@@ -52,33 +62,33 @@ public class OrderItem {
     }
     
     @Column(name = "ORDERID")
-    private BigDecimal orderId;
+    private Long orderId;
     
     @OneToOne
     private Product product;
     
-    public BigDecimal getQuantity() {
+    public Long getQuantity() {
         return this.quantity;
     }
 
-    public void setQuantity(BigDecimal quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
     
-    public BigDecimal getProductId() {
+    public Long getProductId() {
         return this.productId;
     }
 
-    public void setProductId(BigDecimal param) {
+    public void setProductId(Long param) {
         this.productId = param;
     }
     
     
-    public BigDecimal getOrderId() {
+    public Long getOrderId() {
         return this.orderId;
     }
 
-    public void setOrderId(BigDecimal param) {
+    public void setOrderId(Long param) {
         this.orderId = param;
     }
 

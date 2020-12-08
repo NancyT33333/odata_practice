@@ -7,6 +7,10 @@ applications:
   # buildpack: sap_java_buildpack
   # health-check-type: http
   # health-check-http-endpoint: /health
+  services:
+  - hanadb2
+  - applogs_odatajpa
+  - hana-schema-svc
   env:
       # Disable Spring Auto Reconfiguration
       JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}' 

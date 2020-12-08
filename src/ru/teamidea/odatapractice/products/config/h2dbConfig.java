@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -29,6 +30,7 @@ import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
  */
 @Configuration
 @EnableJpaRepositories
+@Profile("local")
 @ComponentScan(basePackages = "ru.teamidea.odatapractice.products")
 public class h2dbConfig {
 
@@ -45,7 +47,7 @@ public class h2dbConfig {
      */
     @Bean(name = "entityManagerFactory")
     public EntityManagerFactory entityManagerFactory() {
-//        return EntityManagerFactoryProvider.get(dataSource, Advertisement.class.getPackage().getName());
+
     	LocalContainerEntityManagerFactoryBean springEMF = new LocalContainerEntityManagerFactoryBean();
 //    	
     	springEMF.setPersistenceUnitName("ODataSpring");
@@ -56,10 +58,6 @@ public class h2dbConfig {
 		springEMF.afterPropertiesSet();
 		return springEMF.getObject();
 		
-		
-		
-		
-
     }
 
 //    /**

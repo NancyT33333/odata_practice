@@ -172,19 +172,25 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!-- H2 (in-memory) database implementations -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>			
-			<scope>runtime</scope>
-			<version>1.4.198</version>
-		</dependency>
+		
+	
 		<dependency>
 		    <groupId>com.sap.cloud.db.jdbc</groupId>
 		    <artifactId>ngdbc</artifactId>
 		    <version>2.3.55</version>
 		</dependency>
-	
+	 <dependency>
+         <groupId>com.zaxxer.hikari</groupId>
+         <artifactId>HikariDataSource</artifactId>
+         <scope>system</scope>
+         <version>3.2.0</version>
+         <systemPath>${basedir}\WebContent\WEB-INF\lib\HikariCP-3.2.0.jar</systemPath>
+      </dependency>
+      <dependency>
+			<groupId>io.pivotal.cfenv</groupId>
+			<artifactId>java-cfenv-boot</artifactId>
+			<version>2.1.0.RELEASE</version>
+		</dependency>
 	</dependencies>
 		<profiles>
 		 <profile>
@@ -195,13 +201,14 @@
             <properties>
 		        <activatedProperties>local</activatedProperties>
 		    </properties>
-            <dependencies>
+		     <dependencies>
             	<dependency>
-		            <groupId>com.h2database</groupId>
+		           <groupId>com.h2database</groupId>
 		            <artifactId>h2</artifactId>
 		            <scope>runtime</scope>
 		        </dependency>
             </dependencies>
+          
 		</profile>
 		
 		<profile>

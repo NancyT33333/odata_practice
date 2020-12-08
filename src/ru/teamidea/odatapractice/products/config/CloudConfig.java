@@ -11,7 +11,10 @@ import javax.sql.DataSource;
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.CloudException;
 import org.springframework.cloud.config.java.AbstractCloudConfig;
@@ -22,68 +25,84 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 
 import com.sap.hana.cloud.hcp.service.common.HANAServiceInfo;
-//import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.HikariDataSource;
+
+import io.pivotal.cfenv.core.CfCredentials;
+import io.pivotal.cfenv.jdbc.CfJdbcEnv;
 
 @Configuration
 @EnableJpaRepositories
-@Profile("cloud")
+@Profile("cf")
 @ComponentScan(basePackages = "ru.teamidea.odatapractice.products")
 public class CloudConfig extends AbstractCloudConfig {
+    
+    @Bean   
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        // make environment variables available for Spring's @Value annotation
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+    
 
-	private static final String HANA_SVC = "hana-schema-svc";
-
-	private static final Logger LOG = LoggerFactory.getLogger(CloudConfig.class);
-
-	/**
-	 * Create dataSource bean from SAP CF
-	 * 
-	 * @return dataSource dataSoruce created from HANA Service.
-	 */
-	@Bean
-	@Primary
-	public DataSource dataSource() {
-		DataSource dataSource = null;
-		try {
-		    List<String> dataSourceNames = Arrays.asList("BasicDbcpPooledDataSourceCreator",
-	                "TomcatJdbcPooledDataSourceCreator", "HikariCpPooledDataSourceCreator",
-	                "TomcatDbcpPooledDataSourceCreator");
-	        DataSourceConfig dbConfig = new DataSourceConfig(dataSourceNames);
-			
-		dataSource = connectionFactory().dataSource(dbConfig);
-		} catch (CloudException ex) {
-			LOG.error(" ", ex);
-		}
-		return dataSource;
-	}
-//	@Bean
-//	@Profile("cloud")
-//	public DataSource dataSource() {
+//	private static final String HANA_SVC = "hana-schema-svc";
 //
+	private static final Logger LOG = LoggerFactory.getLogger(CloudConfig.class);
+	
+    @Bean
+    @Primary
+    @Profile("cf")
+    public DataSourceProperties dataSourceProperties() {
+        CfJdbcEnv cfJdbcEnv = new CfJdbcEnv();
+        DataSourceProperties properties = new DataSourceProperties();
+        CfCredentials hanaCredentials = cfJdbcEnv.findCredentialsByName("hana-schema-svc");
+        
+
+        if (hanaCredentials != null) {
+
+            String uri = hanaCredentials.getUri("hana-schema-svc");
+            properties.setUrl(uri);
+            properties.setUsername(hanaCredentials.getUsername());
+            properties.setPassword(hanaCredentials.getPassword());
+        }
+
+        return properties;
+    }
+
+	@Bean	
+	@Profile("cf")
+	public DataSource dataSource() {
+	    String user = dataSourceProperties().getUsername();
+	    String password = dataSourceProperties().getPassword();
+	    String url = dataSourceProperties().getUrl();
 //	    HANAServiceInfo serviceInfo = (HANAServiceInfo) cloud().getServiceInfo("hanaservice2");
 //
 //	    String host = serviceInfo.getHost();
 //	    int port = serviceInfo.getPort();
 //
-//	    String username = serviceInfo.getUserName();
+//	    String user = serviceInfo.getUserName();
 //	    String password = serviceInfo.getPassword();
 //	    String schema = serviceInfo.getUserName(); // The schemaname matches the username
 //
 //	    String url = new UriInfo("jdbc:sap", host, port, null, null, null,
 //	            "currentschema=" + schema + "&encrypt=true&validateCertificate=true").toString();
-//
-//	    return DataSourceBuilder.create().type(HikariDataSource.class)
-//	            .driverClassName(com.sap.db.jdbc.Driver.class.getName())
-//	            .url(url)
-//	            .username(username)
-//	            .password(password)
-//	            .build();
-//		
-//	}
+
+	    return DataSourceBuilder.create()
+	            .type(HikariDataSource.class)
+	            .driverClassName(com.sap.db.jdbc.Driver.class.getName())
+	            .url(url)
+	            .username(user)
+	            .password(password)
+	            .build();
+		
+	}
+	
+
 
 	/**
 	 * Create Eclipselink EMF from the dataSource bean. JPAvendor and datasource
@@ -94,6 +113,7 @@ public class CloudConfig extends AbstractCloudConfig {
 	@Bean
 	public EntityManagerFactory entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean springEMF = new LocalContainerEntityManagerFactoryBean();
+		  springEMF.setPersistenceUnitName("ODataSpring");
 		springEMF.setJpaVendorAdapter(new EclipseLinkJpaVendorAdapter());
 		springEMF.setDataSource(dataSource());
 		springEMF.afterPropertiesSet();
