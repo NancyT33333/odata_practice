@@ -24,7 +24,7 @@ public class Product {
     private String name;
     
     @Column(name = "PICTURE")
-    private Byte[] picture;
+    private String picture;
     
     @Column(name = "CURRENCY", length = 3)
     private String currency;
@@ -73,11 +73,11 @@ public class Product {
         return this.currency;
     }
     
-    public Byte[] getPicture() {
+    public String getPicture() {
         return this.picture;
     }
 
-    public void setPicture(Byte[] param) {
+    public void setPicture(String param) {
         this.picture = param;
     }
 
