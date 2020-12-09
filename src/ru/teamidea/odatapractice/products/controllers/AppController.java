@@ -1,5 +1,10 @@
 package ru.teamidea.odatapractice.products.controllers;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
@@ -8,7 +13,11 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerA
 import org.springframework.boot.autoconfigure.jms.JndiConnectionFactoryAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
+
+import com.sap.hcp.cf.logging.servlet.filter.RequestLoggingFilter;
 
 import ru.teamidea.odatapractice.products.config.CloudConfig;
 import ru.teamidea.odatapractice.products.context.JPAServiceFactory;
@@ -34,4 +43,6 @@ public class AppController extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(AppController.class, CloudConfig.class);
 	}
+	
+
 }

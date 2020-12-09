@@ -22,7 +22,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
-@Table(name = "ORDER1")
+@Table(name = "ORDERS")
 
 public class Order {
     
@@ -104,7 +104,7 @@ public class Order {
         this.email = email;
     }
         
-    @Column(name="(select SURNAME, FIRSTNAME from ORDER1) as fullName",insertable = false, updatable = false)
+    @Column(name="(select SURNAME, FIRSTNAME from ORDER) as fullName",insertable = false, updatable = false)
     public String getFullName() {
         return fullName;
     }

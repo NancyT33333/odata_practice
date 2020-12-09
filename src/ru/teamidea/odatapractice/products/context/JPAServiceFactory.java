@@ -4,7 +4,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.olingo.odata2.api.ODataCallback;
+import org.apache.olingo.odata2.api.ODataDebugCallback;
+import org.apache.olingo.odata2.api.commons.HttpStatusCodes;
 import org.apache.olingo.odata2.api.processor.ODataContext;
+import org.apache.olingo.odata2.api.processor.ODataErrorCallback;
+import org.apache.olingo.odata2.api.processor.ODataResponse;
+import org.apache.olingo.odata2.core.commons.ContentType;
+import org.apache.olingo.odata2.core.exception.ODataRuntimeException;
 import org.apache.olingo.odata2.jpa.processor.api.ODataJPAContext;
 import org.apache.olingo.odata2.jpa.processor.api.ODataJPAServiceFactory;
 import org.apache.olingo.odata2.jpa.processor.api.exception.ODataJPARuntimeException;
@@ -12,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
+import ru.teamidea.odatapractice.products.controllers.MyOwnErrorCallback;
+import ru.teamidea.odatapractice.products.controllers.ScenarioDebugCallback;
 import ru.teamidea.odatapractice.products.util.SpringContextUtil;
 
 
@@ -24,23 +33,40 @@ public class JPAServiceFactory extends ODataJPAServiceFactory {
 	private static final Logger LOG = LoggerFactory.getLogger(JPAServiceFactory.class);
 
 	@Override
-	public ODataJPAContext initializeODataJPAContext() throws ODataJPARuntimeException {
+	public ODataJPAContext initializeODataJPAContext() 
+	        throws ODataJPARuntimeException {
+	   
 		ODataJPAContext oDataJPACtx = getODataJPAContext();
-		ODataContext octx = oDataJPACtx.getODataContext();
-//        HttpServletRequest request = (HttpServletRequest) octx.getParameter(
-//        ODataContext.HTTP_SERVLET_REQUEST_OBJECT);
-//        EntityManager em = (EntityManager)request.getAttribute(JerseyConfig.EntityManagerFilter.EM_REQUEST_ATTRIBUTE);
-//        
-//      oDataJPACtx.setEntityManager(em);
-		EntityManagerFactory emf = (EntityManagerFactory) SpringContextUtil.getBean(EMF);
-		LOG.debug("EMF in JPAservicefactory " + emf);
-		oDataJPACtx.setEntityManagerFactory(emf);
-		oDataJPACtx.setPersistenceUnitName(PERSISTENT_UNIT);
-//		oDataJPACtx.setJPAEdmMappingModel("EspmEdmMapping.xml");
 		
-		oDataJPACtx.setDefaultNaming(true);
-		this.setDetailErrors(true);
-		return oDataJPACtx;
+		EntityManagerFactory emf ;
+		try {
+		    emf  = (EntityManagerFactory) SpringContextUtil.getBean(EMF);
+		    LOG.debug("EMF in JPAservicefactory " + emf);
+    		oDataJPACtx.setEntityManagerFactory(emf);
+    		oDataJPACtx.setPersistenceUnitName(PERSISTENT_UNIT);
+    //		oDataJPACtx.setJPAEdmMappingModel("EspmEdmMapping.xml");
+    		
+    		oDataJPACtx.setDefaultNaming(true);
+    		this.setDetailErrors(true);
+    		return oDataJPACtx;
+		} catch (Exception e) {
+		    LOG.error(e.getMessage());
+            throw new ODataRuntimeException(e);
+           
+        }
+	
+	}      
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+    public  <T extends ODataCallback> T getCallback(final Class<T> callbackInterface)
+	{ 
+	  return (T) (callbackInterface.isAssignableFrom(MyOwnErrorCallback.class) ? 
+	          new MyOwnErrorCallback() : 
+	      callbackInterface.isAssignableFrom(ODataDebugCallback.class) ? 
+	              new ScenarioDebugCallback() : 
+	                     super.getCallback(callbackInterface));
 	}
 
 }

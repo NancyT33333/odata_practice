@@ -18,7 +18,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
-@Table(name = "ORDERITEMS")
+@Table(name = "ORDERITEM")
 public class OrderItem {
 	
     public OrderItem(Long id) {

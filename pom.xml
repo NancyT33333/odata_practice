@@ -191,6 +191,23 @@
 			<artifactId>java-cfenv-boot</artifactId>
 			<version>2.1.0.RELEASE</version>
 		</dependency>
+		<!-- Logging library -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			
+		</dependency>
+		<dependency>
+			<groupId>com.sap.hcp.cf.logging</groupId>
+			<artifactId>cf-java-logging-support-logback</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sap.hcp.cf.logging</groupId>
+			<artifactId>cf-java-logging-support-servlet</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		
 	</dependencies>
 		<profiles>
 		 <profile>
@@ -253,7 +270,7 @@
 						</goals>
 						<configuration>
 							<persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation>
-							<logLevel>FINE</logLevel>
+							
 						</configuration>
 					</execution>
 				</executions>
