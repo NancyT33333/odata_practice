@@ -1,42 +1,31 @@
 package ru.teamidea.odatapractice.products.config;
 
-import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.lang.RuntimeException;
 
 import javax.persistence.EntityManagerFactory;
 import javax.servlet.DispatcherType;
 import javax.sql.DataSource;
 
 import org.apache.cxf.jaxrs.servlet.CXFNonSpringJaxrsServlet;
-import org.apache.olingo.odata2.api.exception.ODataApplicationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.cloud.CloudException;
 import org.springframework.cloud.config.java.AbstractCloudConfig;
-import org.springframework.cloud.service.relational.DataSourceConfig;
-import org.springframework.cloud.util.UriInfo;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 
-import com.sap.hana.cloud.hcp.service.common.HANAServiceInfo;
 import com.sap.hcp.cf.logging.servlet.filter.RequestLoggingFilter;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -65,8 +54,7 @@ public class CloudConfig extends AbstractCloudConfig {
         return new PropertySourcesPlaceholderConfigurer();
     }
 
-    // private static final String HANA_SVC = "hana-schema-svc";
-    //
+  
     private static final Logger LOG = LoggerFactory.getLogger(CloudConfig.class);
 
     @Bean
@@ -94,18 +82,7 @@ public class CloudConfig extends AbstractCloudConfig {
         String user = dataSourceProperties().getUsername();
         String password = dataSourceProperties().getPassword();
         String url = dataSourceProperties().getUrl();
-        // HANAServiceInfo serviceInfo = (HANAServiceInfo) cloud().getServiceInfo("hanaservice2");
-        //
-        // String host = serviceInfo.getHost();
-        // int port = serviceInfo.getPort();
-        //
-        // String user = serviceInfo.getUserName();
-        // String password = serviceInfo.getPassword();
-        // String schema = serviceInfo.getUserName(); // The schemaname matches the username
-        //
-        // String url = new UriInfo("jdbc:sap", host, port, null, null, null,
-        // "currentschema=" + schema + "&encrypt=true&validateCertificate=true").toString();
-
+     
         return DataSourceBuilder.create().type(HikariDataSource.class)
                 .driverClassName(com.sap.db.jdbc.Driver.class.getName()).url(url).username(user).password(password)
                 .build();

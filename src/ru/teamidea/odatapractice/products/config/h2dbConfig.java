@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 
@@ -59,15 +58,7 @@ public class h2dbConfig {
 		return springEMF.getObject();
 		
     }
-
-//    /**
-//     * Based on a EntityManager, provides TransactionManager (JPA)
-//     */
-//    @Bean(name = "transactionManager")
-//    public JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-//        return new JpaTransactionManager(entityManagerFactory);
-//    }
-//    
+    
     @Bean
 	public ServletRegistrationBean odataServlet() {
 
@@ -78,12 +69,8 @@ public class h2dbConfig {
 		initParameters.put("org.apache.olingo.odata2.service.factory",
 				"ru.teamidea.odatapractice.products.context.JPAServiceFactory");
 		odataServRegstration.setInitParameters(initParameters);
-
 		return odataServRegstration;
-
-	}
-    
-  
+	}     
  
 
 }

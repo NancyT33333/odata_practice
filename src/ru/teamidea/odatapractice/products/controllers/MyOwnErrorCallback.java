@@ -1,14 +1,12 @@
 package ru.teamidea.odatapractice.products.controllers;
 
-import org.apache.olingo.odata2.api.commons.HttpStatusCodes;
 import org.apache.olingo.odata2.api.ep.EntityProvider;
 import org.apache.olingo.odata2.api.exception.ODataApplicationException;
+import org.apache.olingo.odata2.api.processor.ODataErrorCallback;
 import org.apache.olingo.odata2.api.processor.ODataErrorContext;
 import org.apache.olingo.odata2.api.processor.ODataResponse;
-import org.apache.olingo.odata2.jpa.processor.api.exception.ODataJPAErrorCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.apache.olingo.odata2.api.processor.ODataErrorCallback;
 
 
 

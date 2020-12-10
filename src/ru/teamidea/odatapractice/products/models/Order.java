@@ -1,21 +1,14 @@
 package ru.teamidea.odatapractice.products.models;
 
-import java.lang.annotation.Retention;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -104,13 +97,13 @@ public class Order {
         this.email = email;
     }
         
-    @Column(name="(select SURNAME, FIRSTNAME from ORDER) as fullName",insertable = false, updatable = false)
-    public String getFullName() {
-        return fullName;
-    }
-    
-    @Column(name = "FULLNAME")  
-    transient private String fullName;
+//    @Column(name="(select SURNAME, FIRSTNAME from ORDERS) as fullName",insertable = false, updatable = false)
+//    public String getFullName() {
+//        return fullName;
+//    }
+//    
+// 
+//    transient private String fullName;
 //    
 //    public String getFullName() {
 //        return this.firstName + this.surName;
