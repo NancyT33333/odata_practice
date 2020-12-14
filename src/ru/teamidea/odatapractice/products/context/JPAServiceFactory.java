@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 import ru.teamidea.odatapractice.products.controllers.MyOwnErrorCallback;
+import ru.teamidea.odatapractice.products.controllers.ProductsProcessingExtension;
 //import ru.teamidea.odatapractice.products.controllers.ProductsProcessingExtension;
 import ru.teamidea.odatapractice.products.controllers.ScenarioDebugCallback;
 import ru.teamidea.odatapractice.products.util.SpringContextUtil;
@@ -38,12 +39,11 @@ public class JPAServiceFactory extends ODataJPAServiceFactory {
             LOG.debug("EMF in JPAservicefactory " + emf);
             oDataJPACtx.setEntityManagerFactory(emf);
             oDataJPACtx.setPersistenceUnitName(PERSISTENT_UNIT);
-           
-//            oDataJPACtx.setJPAEdmExtension(new ProductsProcessingExtension());
-        //    oDataJPACtx.setJPAEdmMappingModel("EdmJPAMapping.xml");
-            oDataJPACtx.setDefaultNaming(true);
+            oDataJPACtx.setJPAEdmExtension(new ProductsProcessingExtension());
+
             this.setDetailErrors(true);
             return oDataJPACtx;
+            
         } catch (Exception e) {
             LOG.error(e.getMessage());
             throw new ODataRuntimeException(e);

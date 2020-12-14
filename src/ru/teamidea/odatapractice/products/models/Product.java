@@ -1,6 +1,5 @@
 package ru.teamidea.odatapractice.products.models;
 
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
