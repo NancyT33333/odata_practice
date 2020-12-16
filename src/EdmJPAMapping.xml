@@ -3,12 +3,13 @@
 	xmlns="http://www.apache.org/olingo/odata2/jpa/processor/api/model/mapping">
 	<PersistenceUnit name="ODataSpring">
 		<JPAEntityTypes>
-			<JPAEntityType name="Order">
+			<JPAEntityType name="Order" >
 				<EDMEntitySet>Orders</EDMEntitySet>
 				<JPAAttributes>
-                <JPAAttribute name="fullName" >fullName</JPAAttribute> 
+                <JPAAttribute name="fullName" >FullName</JPAAttribute> 
                    </JPAAttributes>
 			</JPAEntityType>
+			
 			</JPAEntityTypes>	
 	
 	</PersistenceUnit>
