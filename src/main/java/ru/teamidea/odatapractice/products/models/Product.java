@@ -22,7 +22,7 @@ public class Product {
     @Column(name = "NAME")
     private String name;
     
-    @Column(name = "PICTURE")
+    @Column(name = "PICTURE", length = 4096)
     private Byte[] picture;
     
     @Column(name = "CURRENCY", length = 3)

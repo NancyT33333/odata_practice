@@ -43,7 +43,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-				<dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
@@ -172,21 +172,21 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		
-	
+
+
 		<dependency>
-		    <groupId>com.sap.cloud.db.jdbc</groupId>
-		    <artifactId>ngdbc</artifactId>
-		    <version>2.3.55</version>
+			<groupId>com.sap.cloud.db.jdbc</groupId>
+			<artifactId>ngdbc</artifactId>
+			<version>2.3.55</version>
 		</dependency>
-	 <dependency>
-         <groupId>com.zaxxer.hikari</groupId>
-         <artifactId>HikariDataSource</artifactId>
-         <scope>system</scope>
-         <version>3.2.0</version>
-         <systemPath>${basedir}\WebContent\WEB-INF\lib\HikariCP-3.2.0.jar</systemPath>
-      </dependency>
-      <dependency>
+		<dependency>
+			<groupId>com.zaxxer.hikari</groupId>
+			<artifactId>HikariDataSource</artifactId>
+			<scope>system</scope>
+			<version>3.2.0</version>
+			<systemPath>${basedir}\src\main\webapp\WEB-INF\lib\HikariCP-3.2.0.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>io.pivotal.cfenv</groupId>
 			<artifactId>java-cfenv-boot</artifactId>
 			<version>2.1.0.RELEASE</version>
@@ -195,7 +195,7 @@
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
-			
+
 		</dependency>
 		<dependency>
 			<groupId>com.sap.hcp.cf.logging</groupId>
@@ -207,54 +207,46 @@
 			<artifactId>cf-java-logging-support-servlet</artifactId>
 			<version>2.1.1</version>
 		</dependency>
-		
+
 	</dependencies>
-		<profiles>
-		 <profile>
+	<profiles>
+		<profile>
 			<id>local</id>
 			<activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-		        <activatedProperties>local</activatedProperties>
-		    </properties>
-		     <dependencies>
-            	<dependency>
-		           <groupId>com.h2database</groupId>
-		            <artifactId>h2</artifactId>
-		            <scope>runtime</scope>
-		        </dependency>
-            </dependencies>
-          
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<activatedProperties>local</activatedProperties>
+			</properties>
+			<dependencies>
+				<dependency>
+					<groupId>com.h2database</groupId>
+					<artifactId>h2</artifactId>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+
 		</profile>
-		
+
 		<profile>
 			<id>cf</id>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
 			<properties>
-		        <activatedProperties>cf</activatedProperties>
-		    </properties>
-		    
+				<activatedProperties>cf</activatedProperties>
+			</properties>
+
 		</profile>
 	</profiles>
 	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<resources>
-			<resource>
-				<directory>src</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 
 				<configuration>
-					<warSourceDirectory>WebContent</warSourceDirectory>
+
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
@@ -270,7 +262,7 @@
 						</goals>
 						<configuration>
 							<persistenceXMLLocation>META-INF/persistence.xml</persistenceXMLLocation>
-							
+
 						</configuration>
 					</execution>
 				</executions>
