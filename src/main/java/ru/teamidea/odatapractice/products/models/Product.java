@@ -6,8 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
+
 
 @Entity
 @Table(name = "PRODUCT")
@@ -15,14 +16,14 @@ public class Product {
     
     @Id
     @Column(name = "PRODUCT_ID", length = 10)
-    @NotBlank
+    @NotNull
     @GeneratedValue
     private Long id;
 
     @Column(name = "NAME")
     private String name;
     
-    @Column(name = "PICTURE", length = 4096)
+    @Column(name = "PICTURE", length = 32768)
     private Byte[] picture;
     
     @Column(name = "CURRENCY", length = 3)

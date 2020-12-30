@@ -3,6 +3,7 @@ package ru.teamidea.odatapractice.products.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,8 @@ import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 
 
 
@@ -25,7 +27,7 @@ public class Order {
     @Id
     @Column(name = "ID")
     @GeneratedValue
-    @NotBlank
+    @NotNull
     private Long id;
     
     public Long getId() {
@@ -37,14 +39,23 @@ public class Order {
     }
     
     
-    @OneToMany(mappedBy = "order",  targetEntity = OrderItem.class)
+    @OneToMany(mappedBy = "order",  cascade = CascadeType.PERSIST, targetEntity = OrderItem.class)
     private List<OrderItem> orderItems;
 
     public Order() {
         this.orderItems = new ArrayList<OrderItem>();
     }
     
-   
+    public List setOrderItems(List<OrderItem> input) {
+        this.orderItems = input;
+        return input;
+      
+    }
+    
+    public List getOrderItems() {
+       
+        return this.orderItems;
+    }
     
     @Column(name = "SURNAME")
     private String surName;
